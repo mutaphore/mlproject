@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ML Test</title>
+	</head>
+	<body>
+		<h1>Input</h1>
+
+		
+		<form id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
+			{% csrf_token %}
+
+			<strong>Enter comma-separated values: </strong><br>
+			{{ inputForm.raw_x.help_text }}<br>
+			{{ inputForm.raw_x.errors }}
+			{{ inputForm.raw_x }}<br>
+
+			{{ inputForm.raw_y.help_text }}<br>
+			{{ inputForm.raw_y.errors }}
+			{{ inputForm.raw_y }}<br>
+
+			<strong>Upload CSV file: </strong><br>
+			{{ inputForm.raw_file.errors }}
+			{{ inputForm.raw_file }}<br>
+
+			<input type="submit" name="raw_file" value="submit"/>
+		</form><br>
+
+	</body>
+</html>
