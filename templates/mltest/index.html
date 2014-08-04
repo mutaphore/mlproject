@@ -10,27 +10,29 @@
 	<body>
 		<h1>Input</h1>
 
-		<form role="form" id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
-			{% csrf_token %}
+		<div class="container">
+			<form role="form" id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
+				{% csrf_token %}
 
-			<div class="form-group">
-				<label>Enter comma-separated values: </label><br>
-				{{ inputForm.raw_x.help_text }}<br>
-				{{ inputForm.raw_x.errors }}
-				{{ inputForm.raw_x }}
-			</div>
-			<div class="form-group">
-				{{ inputForm.raw_y.help_text }}<br>
-				{{ inputForm.raw_y.errors }}
-				{{ inputForm.raw_y }}
-			</div>
-			<div class="form-group">
-				<label>Upload CSV file: </label><br>
-				{{ inputForm.raw_file.errors }}
-				{{ inputForm.raw_file }}
-			</div>
+				<div class="form-group">
+					<label>Enter comma-separated values: </label><br>
+					{{ inputForm.raw_x.help_text }}<br>
+					{{ inputForm.raw_x.errors }}
+					{{ inputForm.raw_x }}
+				</div>
+				<div class="form-group">
+					{{ inputForm.raw_y.help_text }}<br>
+					{{ inputForm.raw_y.errors }}
+					{{ inputForm.raw_y }}
+				</div>
+				<div class="form-group">
+					<label>Upload CSV file: </label><br>
+					{{ inputForm.raw_file.errors }}
+					{{ inputForm.raw_file }}
+				</div>
 
-			<button class="btn btn-default" type="submit">Submit</button>
-		</form>
+				<button class="btn btn-default" type="submit">Submit</button>
+			</form>
+		</div>
 	</body>
 </html>

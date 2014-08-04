@@ -63,17 +63,21 @@ def resultsView(request, inputId):
 						break
 					rowCount += 1
 					# Convert string literal to float
-					row = [float(elem) for elem in row]
-					data.append(row)
-					X.append(row[0:-1])
-					y.append(row[-1])
-
-				# Do gradient descent
-				n = len(X[0]) + 1    # +1 for column of 1's
-				theta = [0.0] * n
-				alpha = 0.1
-				numIters = 500
-				gradientDescent(X, y, theta, alpha, numIters)
+					try:
+						row = [float(elem) for elem in row]	
+						data.append(row)
+						X.append(row[0:-1])
+						y.append(row[-1])
+					except Exception, e:
+						errors.append(e)
+				
+				if not errors:	
+					# Do gradient descent
+					n = len(X[0]) + 1    # +1 for column of 1's
+					theta = [0.0] * n
+					alpha = 0.1
+					numIters = 500
+					gradientDescent(X, y, theta, alpha, numIters)
 		else:
 			errors.append("Invalid input file type (.csv only)")
 	elif userInput.raw_x and userInput.raw_y:
