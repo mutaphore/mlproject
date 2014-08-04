@@ -2,29 +2,35 @@
 <html>
 	<head>
 		<title>ML Test</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="/static/mltest/bootstrap-3.2.0-dist/js/bootstrap.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/mltest/bootstrap-3.2.0-dist/css/bootstrap-theme.css">
+		<link rel="stylesheet" type="text/css" href="/static/mltest/bootstrap-3.2.0-dist/css/bootstrap.css">
 	</head>
 	<body>
 		<h1>Input</h1>
 
-		
-		<form id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
+		<form role="form" id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
 			{% csrf_token %}
 
-			<strong>Enter comma-separated values: </strong><br>
-			{{ inputForm.raw_x.help_text }}<br>
-			{{ inputForm.raw_x.errors }}
-			{{ inputForm.raw_x }}<br>
+			<div class="form-group">
+				<label>Enter comma-separated values: </label><br>
+				{{ inputForm.raw_x.help_text }}<br>
+				{{ inputForm.raw_x.errors }}
+				{{ inputForm.raw_x }}
+			</div>
+			<div class="form-group">
+				{{ inputForm.raw_y.help_text }}<br>
+				{{ inputForm.raw_y.errors }}
+				{{ inputForm.raw_y }}
+			</div>
+			<div class="form-group">
+				<label>Upload CSV file: </label><br>
+				{{ inputForm.raw_file.errors }}
+				{{ inputForm.raw_file }}
+			</div>
 
-			{{ inputForm.raw_y.help_text }}<br>
-			{{ inputForm.raw_y.errors }}
-			{{ inputForm.raw_y }}<br>
-
-			<strong>Upload CSV file: </strong><br>
-			{{ inputForm.raw_file.errors }}
-			{{ inputForm.raw_file }}<br>
-
-			<input type="submit" name="raw_file" value="submit"/>
-		</form><br>
-
+			<button class="btn btn-default" type="submit">Submit</button>
+		</form>
 	</body>
 </html>

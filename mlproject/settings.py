@@ -67,19 +67,18 @@ DATABASES = {
     #     'HOST': '',
     #     'PORT': '',
     # }
-
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'd8j9oauaj55lg9',
-    #     'USER': 'klqzmnaedoevkc',
-    #     'PASSWORD': 'tkBHuxMmGdaAhk7-c0ddFNsUhk',
-    #     'HOST': 'ec2-54-83-204-78.compute-1.amazonaws.com',
-    #     'PORT': '5432',
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd8j9oauaj55lg9',
+        'USER': 'klqzmnaedoevkc',
+        'PASSWORD': 'tkBHuxMmGdaAhk7-c0ddFNsUhk',
+        'HOST': 'ec2-54-83-204-78.compute-1.amazonaws.com',
+        'PORT': '5432',
+    }
 }
 
 # Heroku: db setting
-DATABASES['default'] = dj_database_url.config(default='postgres://klqzmnaedoevkc:tkBHuxMmGdaAhk7-c0ddFNsUhk@ec2-54-83-204-78.compute-1.amazonaws.com:5432/d8j9oauaj55lg9')
+# DATABASES['default'] = dj_database_url.config(default='postgres://klqzmnaedoevkc:tkBHuxMmGdaAhk7-c0ddFNsUhk@ec2-54-83-204-78.compute-1.amazonaws.com:5432/d8j9oauaj55lg9')
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
@@ -89,9 +88,9 @@ USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATIC_ROOT = 'staticfiles'
-STATICFILES_DIRS = (
+STATIC_URL = '/static/' # Url to find the static files
+STATIC_ROOT = 'staticfiles' # This is where collectstatic collects static files to
+STATICFILES_DIRS = (    # Location of all the static files
     os.path.join(BASE_DIR, 'static'),
 )
 
