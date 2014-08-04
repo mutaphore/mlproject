@@ -20,7 +20,7 @@ def indexView(request):
 		if form.is_valid():
 			userInput = form.save(commit=False)
 
-			if request.FILES.get('raw_file'):
+			if request.FILES.get('raw_file') :
 				userInput.raw_file = request.FILES['raw_file']
 
 			userInput.save()
