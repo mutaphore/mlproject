@@ -25,9 +25,6 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -62,18 +59,27 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
-    'default':  {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pgdb_mlproject',
-        'USER': 'deweichen',
-        'PASSWORD': 'abcdefgh',
-        'HOST': '',
-        'PORT': '',
-    }
+    # 'default':  {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'pgdb_mlproject',
+    #     'USER': 'deweichen',
+    #     'PASSWORD': 'abcdefgh',
+    #     'HOST': '',
+    #     'PORT': '',
+    # }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'd8j9oauaj55lg9',
+    #     'USER': 'klqzmnaedoevkc',
+    #     'PASSWORD': 'tkBHuxMmGdaAhk7-c0ddFNsUhk',
+    #     'HOST': 'ec2-54-83-204-78.compute-1.amazonaws.com',
+    #     'PORT': '5432',
+    # }
 }
 
 # Heroku: db setting
-DATABASES['default'] = dj_database_url.config()
+DATABASES['default'] = dj_database_url.config(default='postgres://klqzmnaedoevkc:tkBHuxMmGdaAhk7-c0ddFNsUhk@ec2-54-83-204-78.compute-1.amazonaws.com:5432/d8j9oauaj55lg9')
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
@@ -90,8 +96,12 @@ STATICFILES_DIRS = (
 )
 
 # Templates
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'))
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
 
 # Media
 MEDIA_URL = '/media/'
-MEDIA_ROOT = (os.path.join(BASE_DIR, 'media'))
+MEDIA_ROOT = (
+    os.path.join(BASE_DIR, 'media')
+)
