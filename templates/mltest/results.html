@@ -8,14 +8,11 @@
 		<link rel="stylesheet" type="text/css" href="/static/mltest/bootstrap-3.2.0-dist/css/bootstrap.css">
 	</head>
 	<body>
-		<h1>Results</h1>
-		
-		<a href="/mltest/">Back to input</a><br>
-
 		<div class="container">
+			<h1>Results</h1>
+			<a href="/mltest/">Back to input</a><br><br>
 			<div class="row">
-				<div class="col-md-4">
-					{% if not errors %}			
+				<div class="col-md-5">
 					<table class="table table-bordered table-hover">
 						<thead>
 						{% for header in headers %}
@@ -26,20 +23,63 @@
 						{% for row in data %}
 							<tr>
 							{% for col in row %}
-								<td>{{ col }}</td>
+							<td>{{ col }}</td>
 							{% endfor %}
-							</tr>				
+							</tr>
 						{% endfor %}
 						</tbody>
 					</table>
-					{% else %}
-					<label>Errors</label>
-					<ul>
-					{% for error in errors %}
-						<li>{{ error }}</li>
-					{% endfor %}
-					</ul>
-					{% endif %}
+				</div>
+				<div class="col-md-1"></div>
+				<div class="col-md-4">
+					<div class="row">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<th>mu</th>								
+							</thead>
+							<tbody>
+								{% for m in mu %}
+								<tr><td>{{ m }}</td></tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					<div class="row">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<th>sigma</th>						
+							</thead>
+							<tbody>
+								{% for s in sigma %}
+								<tr><td>{{ s }}</td></tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					<div class="row">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<th>theta</th>						
+							</thead>
+							<tbody>
+								{% for th in theta %}
+								<tr><td>{{ th }}</td></tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					<div class="row">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<th>J</th>						
+							</thead>
+							<tbody>
+								{% for j in J %}
+								<tr><td>{{ j }}</td></tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

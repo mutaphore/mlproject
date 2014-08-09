@@ -8,33 +8,38 @@
 		<link rel="stylesheet" type="text/css" href="/static/mltest/bootstrap-3.2.0-dist/css/bootstrap.css">
 	</head>
 	<body>
-		<h1>Input</h1>
-
-		<div class="container">
-			<div class="row col-md-6">
-				<form role="form" id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
-					{% csrf_token %}
-					<div class="form-group">
-						<label>Enter comma-separated values: </label><br>
-						{{ inputForm.raw_x.help_text }}<br>
-						{{ inputForm.raw_x.errors }}
-						{{ inputForm.raw_x }}
+		<div class="container theme-showcase" role="main">
+			<h1>Input</h1>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<form role="form" id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
+							{% csrf_token %}
+							<div class="form-group">
+								<label>Enter comma-separated values:</label>
+								<br>
+								{{ inputForm.raw_x.help_text }}<br>
+								{{ inputForm.raw_x.errors }}
+								{{ inputForm.raw_x }}
+							</div>
+							<div class="form-group">
+								{{ inputForm.raw_y.help_text }}<br>
+								{{ inputForm.raw_y.errors }}
+								{{ inputForm.raw_y }}
+							</div>
+							<div class="form-group">
+								<label>Upload CSV file:</label>
+								<br>
+								{{ inputForm.raw_file.errors }}
+								{{ inputForm.raw_file }}
+							</div>
+							<button class="btn btn-default" type="submit">
+							Submit 
+							<span class="glyphicon glyphicon-log-in"></span>
+							</button>
+						</form>
 					</div>
-					<div class="form-group">
-						{{ inputForm.raw_y.help_text }}<br>
-						{{ inputForm.raw_y.errors }}
-						{{ inputForm.raw_y }}
-					</div>
-					<div class="form-group">
-						<label>Upload CSV file: </label><br>
-						{{ inputForm.raw_file.errors }}
-						{{ inputForm.raw_file }}
-					</div>
-					<button class="btn btn-default" type="submit">
-					Submit 
-					<span class="glyphicon glyphicon-log-in"></span>
-					</button>
-				</form>
+				</div>
 			</div>
 		</div>
 	</body>
