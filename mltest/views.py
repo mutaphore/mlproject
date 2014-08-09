@@ -27,8 +27,6 @@ def indexView(request):
 				userInput.save()
 				request.session['inputId'] = userInput.id;
 				return HttpResponseRedirect('results/')
-				# return HttpResponseRedirect('results/' + 
-				# 	str(userInput.id) + '/')
 			else:
 				errors.append("Need both X and Y data")
 		else:
@@ -60,10 +58,8 @@ def resultsView(request):
 			with open(path, "rU") as inputFile:
 				rowCount = 0
 				rdr = csv.reader(inputFile)
-				headers = rdr.next()
 
-				n = len(headers) - 1 + 1	# +1 for bias column of 1's
-				initTheta = [0.0] * n
+				headers = rdr.next()
 				X = []
 				y = []
 
@@ -90,16 +86,20 @@ def resultsView(request):
 		if error:
 			errors.append(error)
 		else:
-			n = 2
+			# n = 2
 			initTheta = [0.0, 0.0]
 			for i in range(0, min(len(X), len(y))):
 				data.append((X[i][0], y[i][0]))
 
 	if errors:
+		# Delete error entry from db
+		userInput.delete()
 		return render_to_response('mltest/error.html', 
 			{'errors': errors}, context)
 	else:
 		# Do gradient descent
+		n = len(X[0]) + 1   # +1 for bias column of 1's
+		initTheta = [0.0] * n
 		alpha = 0.1
 		numIters = 500
 		theta, J, mu, sigma = gradientDescent(X, y, initTheta, alpha, numIters)
@@ -114,8 +114,8 @@ def resultsView(request):
 			'mu': mu,
 			'sigma': sigma,
 		}
-		return render_to_response('mltest/results.html', context_dict,
-			context)
+	return render_to_response('mltest/results.html', context_dict, 
+		context)
 
 def clean(raw_x, raw_y):
 	X, y, error = [None, None, None]

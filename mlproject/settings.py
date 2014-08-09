@@ -13,15 +13,11 @@ import os
 import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '%+7_e+m7bvrt4b^up(h_3td*p7y-rmqn+j)^oh9!7emmsv$0kr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -55,18 +51,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
-    # 'default':  {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'pgdb_mlproject',
-    #     'USER': 'deweichen',
-    #     'PASSWORD': 'abcdefgh',
-    #     'HOST': '',
-    #     'PORT': '',
-    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'd8j9oauaj55lg9',
@@ -74,6 +58,18 @@ DATABASES = {
         'PASSWORD': 'tkBHuxMmGdaAhk7-c0ddFNsUhk',
         'HOST': 'ec2-54-83-204-78.compute-1.amazonaws.com',
         'PORT': '5432',
+    },
+    'local':  {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'pgdb_mlproject',
+        'USER': 'deweichen',
+        'PASSWORD': 'abcdefgh',
+        'HOST': '',
+        'PORT': '',
+    },
+    'sqlite3': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
