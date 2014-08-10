@@ -10,9 +10,6 @@ def gradientDescent(X, y, theta, alpha, numIters):
 	n = len(theta)
 	m = len(y)
 
-	print X_norm
-	print y
-
 	# Convert to numpy structures for easier matrix indexing
 	ones = np.array([1.0] * m)
 	ones.shape = (m, 1)
@@ -36,7 +33,7 @@ def gradientDescent(X, y, theta, alpha, numIters):
 		theta = temp
 		J_history.append(computeCost(X_norm, y, theta))
 
-	print "J: %r" % J_history[-1][0]
+	print "J: %r" % J_history[-1]
 	for j in range(0, n):
 		print "theta%d: %r" % (j, theta[j])
 	print "mu: %r sigma: %r" % (mu, sigma)
@@ -48,7 +45,7 @@ def computeCost(X, y, theta):
 	m = len(y)
 
 	for i in range(0, m):
-		cost += (hyp(X[i], theta) - y[i])**2
+		cost += (hyp(X[i], theta) - float(y[i]))**2
 
 	return cost / (2 * m)
 

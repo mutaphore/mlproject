@@ -75,16 +75,17 @@ def resultsView(request):
 		initTheta = [0.0] * n
 		alpha = 0.1
 		numIters = 500
-		theta, J, mu, sigma =  gradientDescent(X, y, 
+		theta, J_history, mu, sigma =  gradientDescent(X, y, 
 			initTheta, alpha, numIters)
 
+		print "J: %r" % J_history
 		context_dict = {
 			'id': inputId,
 			'headers': tblHeaders,
 			'data': data,
 			'n': range(0, n),
 			'theta': theta,
-			'J': J[-11:-1],
+			'J': J_history[-11:-1],
 			'mu': mu,
 			'sigma': sigma,
 		}
@@ -99,10 +100,10 @@ def cleanRawXY(raw_x, raw_y):
 	raw_y = raw_y.strip().strip(',')
 
 	# Check for characters other than numbers and commas
-	allowedChars = set('0123456789,. ')
+	allowedChars = set('0123456789,.- ')
 	if (any((char not in allowedChars) for char in raw_x) or
 		any((char not in allowedChars) for char in raw_y)):
-		error = "Contain characters other than numbers, commas or periods"
+		error = "Contain characters other than number, comma, dash or period"
 	else:
 		try:
 			X = [[float(val)] for val in raw_x.split(',')]
