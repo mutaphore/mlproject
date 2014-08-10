@@ -10,6 +10,9 @@ def gradientDescent(X, y, theta, alpha, numIters):
 	n = len(theta)
 	m = len(y)
 
+	print X_norm
+	print y
+
 	# Convert to numpy structures for easier matrix indexing
 	ones = np.array([1.0] * m)
 	ones.shape = (m, 1)

@@ -14,9 +14,8 @@ from mltest.LinearRegression import gradientDescent
 def indexView(request):
 	context = RequestContext(request)
 
-	if request.method == 'POST':
+	if request.method == 'POST':	# Submit form
 		form = InputForm(request.POST, request.FILES)
-		errors = []
 
 		if form.is_valid():
 			userInput = form.save(commit=False)
@@ -28,12 +27,12 @@ def indexView(request):
 				request.session['inputId'] = userInput.id;
 				return HttpResponseRedirect('results/')
 			else:
-				errors.append("Need both X and Y data")
+				error = "Need both X and Y data"
 		else:
-			errors.append(form.errors)
+			error = form.errors[0]
 
 		return render_to_response('mltest/error.html', 
-			{'errors': errors}, context)
+			{'error': error}, context)
 
 	else:  # Display form
 		form = InputForm()
@@ -46,67 +45,42 @@ def resultsView(request):
 	inputId = request.session.get('inputId')
 	userInput = Input.objects.get(id=inputId)
 
-	data = []
-	errors = []
-
 	if userInput.raw_file:
-
-		if mimetypes.guess_type(userInput.filename())[0] == 'text/csv':
-
-			path = os.path.join("media", str(userInput.raw_file))
-
-			with open(path, "rU") as inputFile:
-				rowCount = 0
-				rdr = csv.reader(inputFile)
-
-				headers = rdr.next()
-				X = []
-				y = []
-
-				for row in rdr:
-					# Only show the first 100 rows
-					if rowCount > 100:
-						break
-					rowCount += 1
-					# Convert string literal to float
-					try:
-						row = [float(elem) for elem in row]
-						data.append(row)
-						X.append(row[0:-1])
-						y.append(row[-1])
-					except Exception, e:
-						errors.append(e)
-		else:
-			errors.append("Invalid input file type (.csv only)")
+		X, y, tblHeaders, error = cleanRawFile(userInput.raw_file, 
+			userInput.filename())
 	elif userInput.raw_x and userInput.raw_y:
+		tblHeaders = ['x', 'y']
+		X, y, error = cleanRawXY(userInput.raw_x, userInput.raw_y)
+	else:
+		error = "Need both X and Y data"
 
-		headers = ['x', 'y']
-		X, y, error = clean(userInput.raw_x, userInput.raw_y)
-
-		if error:
-			errors.append(error)
-		else:
-			# n = 2
-			initTheta = [0.0, 0.0]
-			for i in range(0, min(len(X), len(y))):
-				data.append((X[i][0], y[i][0]))
-
-	if errors:
+	if error:
+		print "error: %r" % error
 		# Delete error entry from db
 		userInput.delete()
 		return render_to_response('mltest/error.html', 
-			{'errors': errors}, context)
+			{'error': error}, context)
 	else:
+		# Build data array
+		data = []
+		for i in range(0, len(X)):
+			row = []
+			for j in range(0, len(X[0])):
+				row.append(X[i][j])
+			row.append(y[i])
+			data.append(row)
+
 		# Do gradient descent
 		n = len(X[0]) + 1   # +1 for bias column of 1's
 		initTheta = [0.0] * n
 		alpha = 0.1
 		numIters = 500
-		theta, J, mu, sigma = gradientDescent(X, y, initTheta, alpha, numIters)
+		theta, J, mu, sigma =  gradientDescent(X, y, 
+			initTheta, alpha, numIters)
 
 		context_dict = {
 			'id': inputId,
-			'headers': headers,
+			'headers': tblHeaders,
 			'data': data,
 			'n': range(0, n),
 			'theta': theta,
@@ -114,10 +88,11 @@ def resultsView(request):
 			'mu': mu,
 			'sigma': sigma,
 		}
+
 	return render_to_response('mltest/results.html', context_dict, 
 		context)
 
-def clean(raw_x, raw_y):
+def cleanRawXY(raw_x, raw_y):
 	X, y, error = [None, None, None]
 
 	raw_x = raw_x.strip().strip(',')
@@ -131,11 +106,43 @@ def clean(raw_x, raw_y):
 	else:
 		try:
 			X = [[float(val)] for val in raw_x.split(',')]
-			y = [[float(val)] for val in raw_y.split(',')]
+			y = [float(val) for val in raw_y.split(',')]
+			# Trim arrays to the same size
+			shortest = min(len(X), len(y))
+			del X[shortest:]
+			del y[shortest:]
 		except Exception, e:
 			error = e
-
-	print X
-	print y
-
+	
 	return [X, y, error]
+
+def cleanRawFile(raw_file, filename):
+	X, y, error = [[], [], None]
+	
+	if mimetypes.guess_type(filename)[0] == 'text/csv':
+		path = os.path.join("media", str(raw_file))
+		with open(path, "rU") as inputFile:
+			rowCount = 0
+			rdr = csv.reader(inputFile)
+
+			tblHeaders = rdr.next()
+			numCols = len(tblHeaders)
+			
+			for row in rdr:
+				if len(row) != numCols:
+					error = "Row dimension mismatch (%d)" % numCols
+					break
+				try:
+					row = [float(elem) for elem in row]
+					X.append(row[0:-1])
+					y.append(row[-1])
+				except Exception, e:
+					error = e
+					break
+				rowCount += 1
+				if rowCount > 100:
+					break
+	else:
+		error = "Invalid input file type (.csv only)"
+			
+	return [X, y, tblHeaders, error]
