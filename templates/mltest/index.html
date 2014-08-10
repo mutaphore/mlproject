@@ -13,31 +13,53 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6">
-						<form role="form" id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
-							{% csrf_token %}
-							<div class="form-group">
-								<label>Enter comma-separated values:</label>
-								<br>
-								{{ inputForm.raw_x.help_text }}<br>
-								{{ inputForm.raw_x.errors }}
-								{{ inputForm.raw_x }}
-							</div>
-							<div class="form-group">
-								{{ inputForm.raw_y.help_text }}<br>
-								{{ inputForm.raw_y.errors }}
-								{{ inputForm.raw_y }}
-							</div>
-							<div class="form-group">
-								<label>Upload CSV file:</label>
-								<br>
-								{{ inputForm.raw_file.errors }}
-								{{ inputForm.raw_file }}
-							</div>
-							<button class="btn btn-default" type="submit">
-							Submit 
-							<span class="glyphicon glyphicon-log-in"></span>
-							</button>
-						</form>
+						<!-- Nav tabs-->
+		        <ul class="nav nav-tabs" role="tablist">
+		            <li class="active"><a href="#tab1" role="tab" data-toggle="tab">Manual</a></li>
+		            <li><a href="#tab2" role="tab" data-toggle="tab">CSV File</a></li>
+		        </ul>		
+		                
+		        <div class="tab-content">
+			        <!-- Manual input tab -->
+		        	<div class="tab-pane fade in active" id="tab1">
+		        		<form role="form" id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
+									{% csrf_token %}
+									<div class="form-group">
+										<label>Enter comma-separated values:</label>
+										<br>
+										{{ inputForm.raw_x.help_text }}<br>
+										{{ inputForm.raw_x.errors }}
+										{{ inputForm.raw_x }}
+									</div>
+									<div class="form-group">
+										{{ inputForm.raw_y.help_text }}<br>
+										{{ inputForm.raw_y.errors }}
+										{{ inputForm.raw_y }}
+									</div>
+									<button class="btn btn-default" type="submit">
+									Submit 
+									<span class="glyphicon glyphicon-log-in"></span>
+									</button>
+								</form>
+		        	</div>
+		        	<!-- CSV File input tab -->
+		        	<div class="tab-pane fade" id="tab2">
+		        		<form role="form" id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
+									{% csrf_token %}
+									<div class="form-group">
+										<label>Upload CSV file:</label>
+										<br>
+										{{ inputForm.raw_file.errors }}
+										{{ inputForm.raw_file }}
+									</div>
+									<button class="btn btn-default" type="submit">
+									Submit 
+									<span class="glyphicon glyphicon-log-in"></span>
+									</button>
+								</form>
+		        	</div>
+		        </div>
+
 					</div>
 				</div>
 			</div>
