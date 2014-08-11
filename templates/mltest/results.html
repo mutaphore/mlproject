@@ -10,12 +10,20 @@
 		<script type="text/javascript" src="/static/mltest/bootstrap-3.2.0-dist/js/bootstrap.js"></script>
 		<script type="text/javascript" src="/static/mltest/flot/jquery.flot.js"></script>
 		<script type="text/javascript" src="/static/mltest/flot/jquery.flot.axislabels.js"></script>
+		<script type="text/javascript" src="/static/mltest/RegressionLine.js"></script>
 		
 		<script type="text/javascript">
 			$(function() {
-
-				var options = {
-					series: {
+				var max = Math.max.apply(Math, {{data|safe}}.map(function(v) {
+					return v[0];
+				}));
+				var range = [0, max];
+				var regLine = new RegressionLine({{theta|safe}}, 
+					{{mu|safe}}, {{sigma|safe}}, range).create();
+				var dataset = [
+					{
+						label: "Data",
+						data: {{data|safe}},
 						points: {
 			                radius: 4,
 			                show: true,
@@ -23,7 +31,14 @@
 			                fillColor:"#058DC7"
 			            },
 			            color: "#058DC7"
-					},
+					}, {
+						label: "Regression Line",
+						data: regLine,
+						color: "#FF0000",
+						lines: {show: true}
+					}
+				]
+				var options = {
 			        axisLabels: {
 			            show: true
 			        },
@@ -35,11 +50,8 @@
 			            axisLabel: 'Y',
 			        }]
 				};
-
-				d1 = {{ data|safe }};
-				regLine = [[1,1],[2,2],[3,3]];
-
-				$.plot($("#plot-placeholder"), [d1, regLine], options);
+				var plot = $.plot($("#plot-placeholder"), 
+					dataset, options);
 			});
 		</script>
 	</head>
@@ -50,7 +62,7 @@
 			<div class="row">
 				<div class="col-md-10">
 					<div id="plot-placeholder" 
-						style="width: 100%; height: 450px;">
+						style="height: 450px;">
 					</div>
 				</div>
 			</div><br><br>

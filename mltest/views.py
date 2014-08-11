@@ -78,13 +78,12 @@ def resultsView(request):
 		theta, J_history, mu, sigma =  gradientDescent(X, y, 
 			initTheta, alpha, numIters)
 
-		print "J: %r" % J_history
 		context_dict = {
 			'id': inputId,
 			'headers': tblHeaders,
 			'data': data,
 			'n': range(0, n),
-			'theta': theta,
+			'theta': theta.tolist(),
 			'J': J_history[-11:-1],
 			'mu': mu,
 			'sigma': sigma,

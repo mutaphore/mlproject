@@ -34,9 +34,8 @@ def gradientDescent(X, y, theta, alpha, numIters):
 		J_history.append(computeCost(X_norm, y, theta))
 
 	print "J: %r" % J_history[-1]
-	for j in range(0, n):
-		print "theta%d: %r" % (j, theta[j])
-	print "mu: %r sigma: %r" % (mu, sigma)
+	print "theta: %r" % theta
+	print "mu: %r sigma: %r" % (mu, sigma)	
 
 	return theta, J_history, mu, sigma 
 
