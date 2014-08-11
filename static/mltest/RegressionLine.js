@@ -8,11 +8,11 @@ var RegressionLine = function(theta, mu, sigma, max) {
 };
 
 RegressionLine.prototype.create = function() {
+	var norm_x1 = (0 - this.mu) / this.sigma;
+	var norm_x2 = (this.max - this.mu) / this.sigma;
 
-	var norm_x = (this.max - this.mu) / this.sigma;	// Normalized x
-
-	this.regLine.push([0, 0]);
-	this.regLine.push([this.max, (this.theta[0] + this.theta[1] * norm_x)]);
+	this.regLine.push([0, (this.theta[0] + this.theta[1] * norm_x1)]);
+	this.regLine.push([this.max, (this.theta[0] + this.theta[1] * norm_x2)]);
 
 	return this.regLine;
 };
