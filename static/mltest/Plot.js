@@ -4,7 +4,7 @@ var Plot = function(data, theta, mu, sigma, id) {
 	this.theta = theta;
 	this.mu = mu;
 	this.sigma = sigma;
-	this.id = id;
+	this.id = "#" + id;
 	this.plot = null;
 }
 
@@ -46,13 +46,42 @@ Plot.prototype.init = function() {
         yaxes: [{
             axisLabel: 'Y',
         }],
+        grid: {
+			hoverable: true,
+			clickable: true
+		},
         legend: {
         	position: "se"
         }
 	};
 
+	$("<div id='tooltip'></div>").css({
+		position: "absolute",
+		display: "none",
+		border: "1px solid #fdd",
+		padding: "2px",
+		"background-color": "#fee",
+		opacity: 0.80
+	}).appendTo("body");
+
+	// Show point values
+	$(this.id).bind("plothover", function (event, pos, item) {
+		var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
+		$("#hoverdata").text(str);
+
+		if (item) {
+			var x = item.datapoint[0].toFixed(2),
+				y = item.datapoint[1].toFixed(2);
+
+			$("#tooltip").html("(" + x + ", " + y + ")")
+				.css({top: item.pageY+5, left: item.pageX+5})
+				.fadeIn(200);
+		} else {
+			$("#tooltip").hide();
+		}
+	});
 	// Plot it!
-	this.plot = $.plot($("#" + this.id), 
+	this.plot = $.plot($(this.id), 
 		dataset, options);
 
 	return this.plot;
