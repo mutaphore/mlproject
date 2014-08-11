@@ -117,7 +117,7 @@ def cleanRawXY(raw_x, raw_y):
 	return [X, y, error]
 
 def cleanRawFile(raw_file, filename):
-	X, y, error = [[], [], None]
+	X, y, tblHeaders, error = [[], [], None, None]
 	
 	if mimetypes.guess_type(filename)[0] == 'text/csv':
 		path = os.path.join("media", str(raw_file))
