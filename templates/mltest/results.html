@@ -14,23 +14,24 @@
 		
 		<script type="text/javascript">
 			$(function() {
-				var max = Math.max.apply(Math, {{data|safe}}.map(function(v) {
-					return v[0];
-				}));
-				var range = [0, max];
+				
+				var data = {{ data }};
+				var max = Math.max.apply(Math, 
+					data.map(function(v) {return v[0];} ));
 				var regLine = new RegressionLine({{theta|safe}}, 
-					{{mu|safe}}, {{sigma|safe}}, range).create();
+					{{mu|safe}}, {{sigma|safe}}, max).create();
+
 				var dataset = [
 					{
 						label: "Data",
-						data: {{data|safe}},
+						data: data,
+						color: "#058DC7",
 						points: {
 			                radius: 4,
 			                show: true,
 			                fill: true,
 			                fillColor:"#058DC7"
-			            },
-			            color: "#058DC7"
+			            }
 					}, {
 						label: "Regression Line",
 						data: regLine,
@@ -46,10 +47,13 @@
 			            axisLabel: 'X',
 			        }],
 			        yaxes: [{
-			            position: 'left',
 			            axisLabel: 'Y',
-			        }]
+			        }],
+			        legend: {
+			        	position: "se"
+			        }
 				};
+				// Plot it!
 				var plot = $.plot($("#plot-placeholder"), 
 					dataset, options);
 			});
