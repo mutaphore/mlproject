@@ -34,6 +34,14 @@
 					</div>
 				</div>
 			</div><br><br>
+			{% else %}
+			<div class="alert alert-warning alert-dismissible col-md-10" role="alert">
+				<button type="button" class="close" data-dismiss="alert">
+					<span aria-hidden="true">&times;</span>
+					<span class="sr-only"></span>
+				</button>
+				Cannot plot more than 1 feature
+			</div>
 			{% endif %}
 			<div class="row">
 				<div class="col-md-5">
