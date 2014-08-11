@@ -11,54 +11,14 @@
 		<script type="text/javascript" src="/static/mltest/flot/jquery.flot.js"></script>
 		<script type="text/javascript" src="/static/mltest/flot/jquery.flot.axislabels.js"></script>
 		<script type="text/javascript" src="/static/mltest/RegressionLine.js"></script>
-		
+		<script type="text/javascript" src="/static/mltest/Plot.js"></script>
 		<script type="text/javascript">
 			$(function() {
-
-				var data = {{ data }};
-				var max = Math.max.apply(Math, 
-					data.map(function(v) {return v[0];} ));
-				var min = Math.min.apply(Math, 
-					data.map(function(v) {return v[0];} ));
-				var regLine = new RegressionLine({{theta|safe}}, 
-					{{mu|safe}}, {{sigma|safe}}, min, max).create();
-
-				var dataset = [
-					{
-						label: "Data",
-						data: data,
-						color: "#058DC7",
-						points: {
-			                radius: 4,
-			                show: true,
-			                fill: true,
-			                fillColor:"#058DC7"
-			            }
-					}, {
-						label: "Regression Line",
-						data: regLine,
-						color: "#FF0000",
-						lines: {show: true}
-					}
-				]
-				
-				var options = {
-			        axisLabels: {
-			            show: true
-			        },
-			        xaxes: [{
-			            axisLabel: 'X',
-			        }],
-			        yaxes: [{
-			            axisLabel: 'Y',
-			        }],
-			        legend: {
-			        	position: "se"
-			        }
-				};
-				// Plot it!
-				var plot = $.plot($("#plot-placeholder"), 
-					dataset, options);
+				{% if n == 2 %}
+				new Plot({{data|safe}}, {{theta|safe}},
+					{{mu|safe}}, {{sigma|safe}}, 
+					"plot-placeholder").init();
+				{% endif %}
 			});
 		</script>
 	</head>
@@ -66,6 +26,7 @@
 		<div class="container">
 			<h1>Results</h1>
 			<a href="/mltest/">Back to input</a><br><br>
+			{% if n == 2 %}
 			<div class="row">
 				<div class="col-md-10">
 					<div id="plot-placeholder" 
@@ -73,6 +34,7 @@
 					</div>
 				</div>
 			</div><br><br>
+			{% endif %}
 			<div class="row">
 				<div class="col-md-5">
 					<table class="table table-bordered table-hover">

@@ -82,7 +82,7 @@ def resultsView(request):
 			'id': inputId,
 			'headers': tblHeaders,
 			'data': data,
-			'n': range(0, n),
+			'n': n,
 			'theta': theta.tolist(),
 			'J': J_history[-11:-1],
 			'mu': mu,
