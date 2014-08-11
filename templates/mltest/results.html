@@ -14,12 +14,14 @@
 		
 		<script type="text/javascript">
 			$(function() {
-				
+
 				var data = {{ data }};
 				var max = Math.max.apply(Math, 
 					data.map(function(v) {return v[0];} ));
+				var min = Math.min.apply(Math, 
+					data.map(function(v) {return v[0];} ));
 				var regLine = new RegressionLine({{theta|safe}}, 
-					{{mu|safe}}, {{sigma|safe}}, max).create();
+					{{mu|safe}}, {{sigma|safe}}, min, max).create();
 
 				var dataset = [
 					{
@@ -39,6 +41,7 @@
 						lines: {show: true}
 					}
 				]
+				
 				var options = {
 			        axisLabels: {
 			            show: true
