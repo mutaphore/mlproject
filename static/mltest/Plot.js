@@ -55,6 +55,7 @@ Plot.prototype.init = function() {
         }
 	};
 
+	// Show tooltip with coordinate values
 	$("<div id='tooltip'></div>").css({
 		position: "absolute",
 		display: "none",
@@ -64,7 +65,6 @@ Plot.prototype.init = function() {
 		opacity: 0.80
 	}).appendTo("body");
 
-	// Show point values
 	$(this.id).bind("plothover", function (event, pos, item) {
 		var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
 		$("#hoverdata").text(str);
@@ -80,6 +80,7 @@ Plot.prototype.init = function() {
 			$("#tooltip").hide();
 		}
 	});
+	
 	// Plot it!
 	this.plot = $.plot($(this.id), 
 		dataset, options);
