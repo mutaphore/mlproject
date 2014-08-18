@@ -7,7 +7,7 @@ Data.files = [
 	},
 	{
 		filename: "cricket_chirps.csv", 
-		description: "Cricket Chirps: X = Chirps Per Second, Y = Temperature (F)"
+		description: "Cricket Chirps: X = Chirps/sec for the striped ground cricket, Y = Temperature (F)"
 	},
 	{
 		filename: "gray_kangaroos.csv", 

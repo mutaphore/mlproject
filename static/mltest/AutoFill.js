@@ -5,16 +5,6 @@ var AutoFill = function(xId, yId, bgId) {
 	this.datasets = [];
 }
 
-var createBtns = function(btnGrp) {
-	var files = $(Data.files);
-
-	for (var i = 0; i < Data.files.length; i++) {
-		btnGrp.append('<button id="' + 'ds' + (i + 1) + 
-			'" type="button" class="btn btn-default">Dataset ' + 
-			(i + 1) +'</button>');
-	};
-}
-
 AutoFill.prototype.init = function() {
 	var self = this;	
 	var files = $(Data.files);
@@ -56,4 +46,14 @@ AutoFill.prototype.init = function() {
 	});
 
 	return this.datasets;
+}
+
+var createBtns = function(btnGrp) {
+	var files = $(Data.files);
+
+	for (var i = 0; i < Data.files.length; i++) {
+		btnGrp.append('<button id="' + 'ds' + (i + 1) + 
+			'" type="button" class="btn btn-default">Dataset ' + 
+			(i + 1) +'</button>');
+	};
 }
