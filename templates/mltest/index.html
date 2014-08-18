@@ -2,58 +2,73 @@
 <html>
 	<head>
 		<title>ML Test</title>
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script type="text/javascript" src="/static/mltest/bootstrap-3.2.0-dist/js/bootstrap.js"></script>
+		
 		<link rel="stylesheet" type="text/css" href="/static/mltest/bootstrap-3.2.0-dist/css/bootstrap-theme.css">
 		<link rel="stylesheet" type="text/css" href="/static/mltest/bootstrap-3.2.0-dist/css/bootstrap.css">
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="/static/mltest/bootstrap-3.2.0-dist/js/bootstrap.js"></script>
+
+		<script type="text/javascript" src="/static/mltest/papaparse.min.js"></script>	
+		<script type="text/javascript" src="/static/mltest/Data.js"></script>
+		<script type="text/javascript" src="/static/mltest/AutoFill.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				var datasets = new AutoFill("#{{inputForm.raw_x.auto_id}}", "#{{inputForm.raw_y.auto_id}}", "#buttonGroup").init();
+			});
+		</script>
 	</head>
 	<body>
 		<div class="container theme-showcase" role="main">
 			<h1>Input</h1>
 			<div class="container">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-8">
 						<!-- Nav tabs-->
-		        <ul class="nav nav-tabs" role="tablist">
-		            <li class="active"><a href="#tab1" role="tab" data-toggle="tab">Manual</a></li>
-		            <li><a href="#tab2" role="tab" data-toggle="tab">CSV File</a></li>
-		        </ul>						                
-		        <div class="tab-content">
-			        <!-- Manual input tab -->
-		        	<div class="tab-pane fade in active" id="tab1">
-		        		<form role="form" id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
-									{% csrf_token %}
-									<div class="form-group">
-										<label>Enter comma-separated values</label>
-										<br>
-										{{ inputForm.raw_x.help_text }}<br>
-										{{ inputForm.raw_x.errors }}
-										{{ inputForm.raw_x }}
-									</div>
-									<div class="form-group">
-										{{ inputForm.raw_y.help_text }}<br>
-										{{ inputForm.raw_y.errors }}
-										{{ inputForm.raw_y }}
-									</div>
-									<button class="btn btn-default" type="submit">
-									Submit 
-									<span class="glyphicon glyphicon-log-in"></span>
-									</button>
-								</form>
-		        	</div>
-		        	<!-- CSV File input tab -->
-		        	<div class="tab-pane fade" id="tab2">
-		        		<form role="form" id="raw_input" method="POST" 
-		        			action="/mltest/" enctype="multipart/form-data">
+				        <ul class="nav nav-tabs" role="tablist">
+				            <li class="active"><a href="#tab1" role="tab" data-toggle="tab">Manual</a></li>
+				            <li><a href="#tab2" role="tab" data-toggle="tab">CSV File</a></li>
+				        </ul><br>
+				        <div class="tab-content">					        
+					        <!-- Manual input tab -->
+				        	<div class="tab-pane fade in active" id="tab1">
+					        	<div class="col-md-10">
+					        		<form role="form" id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
+										{% csrf_token %}
+										<div class="form-group">
+											<label>Enter comma-separated values</label>
+											<br>
+											{{ inputForm.raw_x.help_text }}<br>
+											{{ inputForm.raw_x.errors }}
+											{{ inputForm.raw_x }}
+										</div>
+										<div class="form-group">
+											{{ inputForm.raw_y.help_text }}<br>
+											{{ inputForm.raw_y.errors }}
+											{{ inputForm.raw_y }}
+										</div>
+										<button class="btn btn-default" type="submit">
+										Submit 
+										<span class="glyphicon glyphicon-log-in"></span>
+										</button>
+									</form>
+								</div>						
+								<div class="col-md-2">
+									<div id="buttonGroup" class="btn-group-vertical"></div>
+								</div>
+				        	</div>
+				        	<!-- CSV File input tab -->
+				        	<div class="tab-pane fade" id="tab2">
+				        		<form role="form" id="raw_input" method="POST" 
+				        			action="/mltest/" enctype="multipart/form-data">
 									{% csrf_token %}
 									<div class="form-group">
 										<label>Upload CSV file</label>
 										<p class="help-block">
 										Format:<br>
-										x1,x2,y<br>
-										1,5,2<br>
-										3,2,7<br>
-										8,4,6<br>
+										xheading1,xheading2,xheading3,yheading <br>
+										xvalue1_1,xvalue2_1,xvalue3_1,yvalue_1 <br>
+										xvalue1_2,xvalue2_2,xvalue3_2,yvalue_2 <br>
 										...
 										</p>
 										{{ inputForm.raw_file.errors }}
@@ -64,8 +79,8 @@
 									<span class="glyphicon glyphicon-log-in"></span>
 									</button>
 								</form>
-		        	</div>
-		        </div>
+				        	</div>
+				        </div>
 					</div>
 				</div>
 			</div>

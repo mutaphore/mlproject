@@ -49,7 +49,7 @@ def resultsView(request):
 		X, y, tblHeaders, error = cleanRawFile(userInput.raw_file, 
 			userInput.filename())
 	elif userInput.raw_x and userInput.raw_y:
-		tblHeaders = ['x', 'y']
+		tblHeaders = ['X', 'Y']
 		X, y, error = cleanRawXY(userInput.raw_x, userInput.raw_y)
 	else:
 		error = "Need both X and Y data"

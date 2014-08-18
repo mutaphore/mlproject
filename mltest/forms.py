@@ -8,7 +8,7 @@ class InputForm(forms.ModelForm):
 			'cols': 100, 
 			'rows': 10}), 
 		max_length=1000, 
-		help_text="x",
+		help_text="X",
 		required=False)
 
 	raw_y = forms.CharField(
@@ -17,7 +17,7 @@ class InputForm(forms.ModelForm):
 			'cols': 100, 
 			'rows': 10}), 
 		max_length=1000, 
-		help_text="y",
+		help_text="Y",
 		required=False)
 
 	raw_file = forms.FileField(required=False)
