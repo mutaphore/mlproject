@@ -2,7 +2,8 @@ var AutoFill = function(xId, yId, bgId) {
 	this.xInput = $(xId);
 	this.yInput = $(yId);
 	this.btnGrp = $(bgId);
-	this.datasets = [];
+
+	this.init();	// Lets initialize it
 }
 
 AutoFill.prototype.init = function() {
@@ -10,50 +11,52 @@ AutoFill.prototype.init = function() {
 	var files = $(Data.files);
 
 	// Create buttons in button group
-	this.btnArr = createBtns(this.btnGrp);
-
-	// Parse data
-	$.each(files, function(index, file) {
-		$.get('/static/mltest/Datasets/' + file.filename, function(data) {					
-			Papa.parse(data, {
-				download: false,				
-				worker: true,
-				complete: function(results) {
-					var data = results.data;
-					var x = new Array(), y = new Array();
-
-					for (var i = 1; i < data.length; i++) {
-						x.push(data[i][0]);
-						y.push(data[i][1]);
-					};
-					self.datasets.push({x: x, y: y});													
-
-					var button = $("#ds" + (index + 1));
-					// Set click listener
-					button.click(function() {
-						self.xInput.val(self.datasets[index].x.join(", "));
-						self.yInput.val(self.datasets[index].y.join(", "));
-					});
-					// Set tooltip
-					button.tooltip({
-						container: "body",
-						title: file.description,
-						placement: "right"
-					})
-				}
-			});
-		});	 
-	});
-
-	return this.datasets;
+	this.createBtns();
 }
 
-var createBtns = function(btnGrp) {
+AutoFill.prototype.createBtns = function() {
+	var self = this;
 	var files = $(Data.files);
+	var dsId, button, file;
 
-	for (var i = 0; i < Data.files.length; i++) {
-		btnGrp.append('<button id="' + 'ds' + (i + 1) + 
-			'" type="button" class="btn btn-default">Dataset ' + 
-			(i + 1) +'</button>');
+	for (var i = 0; i < files.size(); i++) {
+		file = files.get(i);
+		dsId = i + 1;
+
+		this.btnGrp.append('<button id="' + 'ds' + dsId + 
+			'" type="button" class="btn btn-default">Dataset ' + dsId + '</button>');
+
+		button = $('#ds' + dsId);
+
+		// Set tooltip
+		button.tooltip({
+			container: 'body',
+			title: file.description,
+			placement: 'right'
+		});		
+
+		// Set click listener
+		button.on("click", {filename: file.filename}, function(event) {	
+
+			$.get('/static/mltest/Datasets/' + event.data.filename, function(data) {					
+				Papa.parse(data, {
+					download: false,				
+					worker: true,
+					complete: function(results) {
+						var data = results.data;
+						var x = new Array(), y = new Array();						
+
+						for (var i = 1; i < data.length; i++) {
+							x.push(data[i][0]);
+							y.push(data[i][1]);
+						};						
+						self.xInput.val(x.join(", "));
+						self.yInput.val(y.join(", "));
+					}
+				});
+			});
+
+		});
+
 	};
-}
+};

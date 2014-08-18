@@ -28,8 +28,8 @@ def indexView(request):
 				return HttpResponseRedirect('results/')
 			else:
 				error = "Need both X and Y data"
-		else:
-			error = form.errors[0]
+		else:		
+			error = form.errors
 
 		return render_to_response('mltest/error.html', 
 			{'error': error}, context)

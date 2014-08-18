@@ -14,7 +14,7 @@
 		<script type="text/javascript" src="/static/mltest/AutoFill.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				var datasets = new AutoFill("#{{inputForm.raw_x.auto_id}}", "#{{inputForm.raw_y.auto_id}}", "#buttonGroup").init();
+				new AutoFill("#{{inputForm.raw_x.auto_id}}", "#{{inputForm.raw_y.auto_id}}", "#buttonGroup");
 			});
 		</script>
 	</head>

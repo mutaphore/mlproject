@@ -7,7 +7,7 @@ class InputForm(forms.ModelForm):
 			'class': 'form-control', 
 			'cols': 100, 
 			'rows': 10}), 
-		max_length=1000, 
+		max_length=10000, 
 		help_text="X",
 		required=False)
 
@@ -16,7 +16,7 @@ class InputForm(forms.ModelForm):
 			'class': 'form-control',
 			'cols': 100, 
 			'rows': 10}), 
-		max_length=1000, 
+		max_length=10000, 
 		help_text="Y",
 		required=False)
 
