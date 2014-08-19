@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 
 from mltest.models import Input
-from mltest.forms import InputForm
+from mltest.forms import InputForm, PredictForm
 from mltest.LinearRegression import gradientDescent
 
 def indexView(request):
@@ -78,6 +78,9 @@ def resultsView(request):
 		theta, J_history, mu, sigma =  gradientDescent(X, y, 
 			initTheta, alpha, numIters)
 
+		# Set up predict form fields
+		predictForm = PredictForm(request.POST or None, n=n)		
+
 		context_dict = {
 			'id': inputId,
 			'headers': tblHeaders,
@@ -87,6 +90,7 @@ def resultsView(request):
 			'J': J_history[-11:-1],
 			'mu': mu,
 			'sigma': sigma,
+			'predictForm': predictForm,
 		}
 
 	return render_to_response('mltest/results.html', context_dict, 

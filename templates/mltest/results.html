@@ -6,24 +6,41 @@
 		<link rel="stylesheet" type="text/css" href="/static/mltest/bootstrap-3.2.0-dist/css/bootstrap-theme.css">
 		<link rel="stylesheet" type="text/css" href="/static/mltest/bootstrap-3.2.0-dist/css/bootstrap.css">
 
-    	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script type="text/javascript" src="/static/mltest/bootstrap-3.2.0-dist/js/bootstrap.js"></script>
 		<script type="text/javascript" src="/static/mltest/flot/jquery.flot.js"></script>
 		<script type="text/javascript" src="/static/mltest/flot/jquery.flot.axislabels.js"></script>
+
 		<script type="text/javascript" src="/static/mltest/RegressionLine.js"></script>
-		<script type="text/javascript" src="/static/mltest/Plot.js"></script>
+		<script type="text/javascript" src="/static/mltest/Plot.js"></script>	
+		<script type="text/javascript" src="/static/mltest/Predict.js"></script>
 		<script type="text/javascript">
-			$(function() {
+			$(function() {				
 				{% if n == 2 %}
 				new Plot({{data|safe}}, {{theta|safe}},
 					{{mu|safe}}, {{sigma|safe}}, 
 					"plot-placeholder").init();
 				{% endif %}
+
+				$("#predictBtn").on('click', null, function(event) {
+					this.blur();
+					var y = Predict({{n|safe}}, {{theta|safe}},
+						{{mu|safe}}, {{sigma|safe}});
+
+					if (y != null) {
+						$("#Y").val(y);
+					}
+					else {
+						$("#Y").val("Invalid");
+					}
+				});
 			});
 		</script>
+		
 	</head>
 	<body>
 		<div class="container">
+
 			<h1>Results</h1>
 			<a href="/mltest/">Back to input</a><br><br>
 			{% if n == 2 %}
@@ -33,19 +50,44 @@
 						style="height: 450px;">
 					</div>
 				</div>
-			</div><br><br>
+			</div><br>
 			{% else %}
 			<div class="alert alert-warning alert-dismissible col-md-10" role="alert">
 				<button type="button" class="close" data-dismiss="alert">
 					<span aria-hidden="true">&times;</span>
 					<span class="sr-only"></span>
 				</button>
-				Cannot plot more than 1 feature
+				Plot disabled for more than 1 feature
 			</div>
 			{% endif %}
+
 			<div class="row">
-				
+				<div class="col-md-10 jumbotron">					
+					<div class="col-md-4">
+					{% csrf_token %}	
+					{% for field in predictForm %}
+						{% if field.label != 'Y' %}
+						<div class="form-group">
+							<label class="col-md-1 control-label">{{ field.label }}</label>
+							<div class="col-md-10">{{ field }}</div>
+						</div>
+						{% endif %}
+					{% endfor %}
+					</div>
+					<div class="col-md-2 text-center">
+						<button class="btn btn-default" id="predictBtn">
+							Predict <span class="glyphicon glyphicon-play"></span>
+						</button>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-md-1 control-label">{{ predictForm.yField.label }}</label>
+							<div class="col-md-10">{{ predictForm.yField }}</div>		
+						</div>
+					</div>					
+				</div>			
 			</div>
+
 			<div class="row">
 				<div class="col-md-5">
 					<table class="table table-bordered table-hover">
@@ -65,7 +107,7 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="col-md-1"></div>
+				<div class="col-md-1"></div>				
 				<div class="col-md-4">
 					<div class="row">
 						<table class="table table-bordered table-hover">

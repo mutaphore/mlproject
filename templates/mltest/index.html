@@ -36,8 +36,7 @@
 									<form role="form" id="raw_input" method="POST" action="/mltest/" enctype="multipart/form-data">
 										{% csrf_token %}
 										<div class="form-group">
-											<label>Enter comma-separated values</label>
-											<br>
+											<label>Enter comma-separated values</label><br>
 											{{ inputForm.raw_x.help_text }}<br>
 											{{ inputForm.raw_x.errors }}
 											{{ inputForm.raw_x }}
@@ -66,9 +65,9 @@
 										<label>Upload CSV file</label>
 										<p class="help-block">
 										Format:<br>
-										xheading1,xheading2,xheading3,yheading <br>
-										xvalue1_1,xvalue2_1,xvalue3_1,yvalue_1 <br>
-										xvalue1_2,xvalue2_2,xvalue3_2,yvalue_2 <br>
+										xheading1,xheading2,xheading3,...,yheading <br>
+										xvalue1_1,xvalue2_1,xvalue3_1,...,yvalue_1 <br>
+										xvalue1_2,xvalue2_2,xvalue3_2,...,yvalue_2 <br>
 										...
 										</p>
 										{{ inputForm.raw_file.errors }}

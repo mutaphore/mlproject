@@ -14,6 +14,7 @@ Plot.prototype.init = function() {
 		this.data.map(function(v) {return v[0];} ));
 	var min = Math.min.apply(Math, 
 		this.data.map(function(v) {return v[0];} ));
+	
 	var regLine = new RegressionLine(this.theta, 
 		this.mu, this.sigma, min, max).create();
 
