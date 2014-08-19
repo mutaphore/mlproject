@@ -38,7 +38,7 @@ AutoFill.prototype.createBtns = function() {
 		// Set click listener
 		button.on("click", {filename: file.filename}, function(event) {	
 
-			$.get('/static/mltest/Datasets/' + event.data.filename, function(data) {					
+			$.get('/static/Datasets/' + event.data.filename, function(data) {					
 				Papa.parse(data, {
 					download: false,				
 					worker: true,
