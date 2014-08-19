@@ -3,8 +3,8 @@ from django.db import models
 from django.dispatch import receiver
 
 class Input(models.Model):
-	raw_x = models.CharField(max_length=1000)
-	raw_y = models.CharField(max_length=1000)
+	raw_x = models.CharField(max_length=10000)
+	raw_y = models.CharField(max_length=10000)
 	raw_file = models.FileField(upload_to='raw_files')
 
 	def filename(self):
