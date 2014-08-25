@@ -1,3 +1,4 @@
+// Wrapper on the flot library to initialize a plot
 var Plot = function(data, theta, mu, sigma, id) {
 
 	this.data = data;
@@ -10,13 +11,17 @@ var Plot = function(data, theta, mu, sigma, id) {
 
 Plot.prototype.init = function() {
 
-	var max = Math.max.apply(Math, 
+	var xMax = Math.max.apply(Math, 
 		this.data.map(function(v) {return v[0];} ));
-	var min = Math.min.apply(Math, 
+	var xMin = Math.min.apply(Math, 
 		this.data.map(function(v) {return v[0];} ));
-	
+	var yMax = Math.max.apply(Math, 
+		this.data.map(function(v) {return v[1];} ));
+	var yMin = Math.min.apply(Math, 
+		this.data.map(function(v) {return v[1];} ));
+
 	var regLine = new RegressionLine(this.theta, 
-		this.mu, this.sigma, min, max).create();
+		this.mu, this.sigma, [xMin, xMax], [yMin, yMax]).create();
 
 	var dataset = [
 		{

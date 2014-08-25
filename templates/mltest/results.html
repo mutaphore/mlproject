@@ -16,7 +16,7 @@
 		<script type="text/javascript" src="/static/mltest/Predict.js"></script>
 		<script type="text/javascript">
 			$(function() {				
-				{% if n == 2 %}
+				{% if n == 2 %}				
 				new Plot({{data|safe}}, {{theta|safe}},
 					{{mu|safe}}, {{sigma|safe}}, 
 					"plot-placeholder").init();

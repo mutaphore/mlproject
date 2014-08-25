@@ -1,4 +1,5 @@
 import numpy as np
+from decimal import *
 
 # X: 2D python list
 # y: 1D python list
@@ -32,6 +33,9 @@ def gradientDescent(X, y, theta, alpha, numIters):
 
 		theta = temp
 		J_history.append(computeCost(X_norm, y, theta))
+
+	# Round theta
+	theta = [round(th, 5) for th in theta]
 
 	print "J: %r" % J_history[-1]
 	print "theta: %r" % theta

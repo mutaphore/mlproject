@@ -37,7 +37,7 @@ class PredictForm(forms.Form):
 					'rows': 1,
 					'readonly': 'True'}),
 				max_length=50,
-				required=True)		
+				required=True)
 
 	def __init__(self, *args, **kwargs):
 		self.n = kwargs.pop('n')
