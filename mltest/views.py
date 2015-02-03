@@ -13,9 +13,6 @@ from mltest.models import Input
 from mltest.forms import InputForm, PredictForm
 from mltest.LinearRegression import gradientDescent
 
-# TODO: Bugs
-# 1,2,3,4,5 vs 1,1,1,1,1
-
 def indexView(request):
 	context = RequestContext(request)
 

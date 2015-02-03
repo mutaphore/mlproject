@@ -29,15 +29,17 @@ class InputForm(forms.ModelForm):
 class PredictForm(forms.Form):
 
 	yField = forms.CharField(
-				label='Y',
-				widget=forms.Textarea(attrs={					
-					'class': 'form-control',
-					'id': 'Y',
-					'cols': 10,
-					'rows': 1,
-					'readonly': 'True'}),
-				max_length=50,
-				required=True)
+		label='Y',
+		widget=forms.Textarea(
+			attrs={					
+				'class': 'form-control',
+				'id': 'Y',
+				'cols': 10,
+				'rows': 1,
+				'readonly': 'True'
+				}),
+		max_length=50,
+		required=True)
 
 	def __init__(self, *args, **kwargs):
 		self.n = kwargs.pop('n')
@@ -46,10 +48,13 @@ class PredictForm(forms.Form):
 		for i in xrange(1, self.n):
 			self.fields[i] = forms.CharField(
 				label='X' + str(i),
-				widget=forms.Textarea(attrs={					
+				widget=forms.Textarea(
+					attrs={					
 					'class': 'form-control',
 					'id': 'X' + str(i),
 					'cols': 10,
-					'rows': 1}),
+					'rows': 1
+					}
+					),
 				max_length=50,
 				required=True)			
